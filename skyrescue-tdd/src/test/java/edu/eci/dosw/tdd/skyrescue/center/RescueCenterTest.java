@@ -102,4 +102,10 @@ public class RescueCenterTest {
         assertTrue(rescueCenter.addDrone(drone));
     }
 
+    //Registrar null
+    @Test 
+    public void shouldNotRegisterANullDrone(){
+        assertFalse(rescueCenter.addDrone(null));
+    }
+
 }
