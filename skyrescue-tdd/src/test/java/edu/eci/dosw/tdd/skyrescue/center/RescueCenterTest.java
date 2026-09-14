@@ -124,5 +124,4 @@ public class RescueCenterTest {
         assertTrue(rescueCenter.addDrone(drone));
         assertFalse(rescueCenter.addDrone(second));
     }
-
 }
