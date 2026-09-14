@@ -42,8 +42,14 @@ public class RescueCenter {
      * @return true if it was registered; false otherwise.
      */
     public boolean addDrone(Drone drone) {
-        // TODO Implement using TDD.
-        return false;
+        this.drones.put(drone.getId(),drone);
+
+        if (drones.get(drone.getId()) != null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
