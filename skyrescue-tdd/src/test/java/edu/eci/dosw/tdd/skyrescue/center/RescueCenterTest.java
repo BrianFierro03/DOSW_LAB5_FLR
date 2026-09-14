@@ -1,0 +1,101 @@
+package edu.eci.dosw.tdd.skyrescue.center;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import edu.eci.dosw.tdd.skyrescue.drone.Drone;
+import edu.eci.dosw.tdd.skyrescue.mission.Mission;
+import edu.eci.dosw.tdd.skyrescue.mission.MissionStatus;
+import edu.eci.dosw.tdd.skyrescue.operator.RescueOperator;
+
+public class RescueCenterTest {
+    private RescueCenter rescueCenter;
+    private Drone drone;
+    private Mission mission;
+    private RescueOperator operator;
+  
+    @BeforeEach 
+    public void setup(){
+        rescueCenter = new RescueCenter(); 
+        drone = new Drone("1030", "Mk", 30);
+        operator = new RescueOperator("2025", "Rudencio");
+    }
+
+    // Operador y dron válidos, distancia permitida
+    @Test 
+    void ShouldCreateMissionCorrectInput(){
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+        
+        mission = rescueCenter.assignMission("2025", "1030", "popayan", 20);
+        
+        assertNotNull(mission, "La misión debería ser creada"); 
+        assertEquals(MissionStatus.ACTIVE, mission.getStatus(), "La misión debe estar activa");
+        assertFalse(drone.isAvailable(), "El dron debe estar no disponible");
+    }
+
+    // Dron inexistente
+    @Test 
+    public void ShouldCreateAnErrorDroneDontExist(){
+        rescueCenter.addOperator(operator);
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("2025", "DONT_EXIST", "popayan", 20);
+        });
+    }
+    
+    // Dron ya ocupado
+    @Test 
+    public void ShouldUseADroneItHaveBusiness(){
+        drone.setAvailable(false); 
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        assertThrows(IllegalStateException.class, () -> {
+            rescueCenter.assignMission("2025", "1030", "popayan", 20);
+        });
+    }
+
+    // Distancia superior a la autonomía
+    @Test
+    public void ShouldThrowAnErrorDistanceExceedsMaxRange() {
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("2025", "1030", "popayan", 50);
+        });
+    }
+
+    // Operador inexistente
+    @Test
+    public void ShouldCreateAnErrorOperatorDontExist() {
+        rescueCenter.addDrone(drone);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("ID_FALSO_777", "1030", "popayan", 20);
+        });
+    }
+
+    // Operador con otra misión activa
+    @Test
+    public void ShouldThrowAnErrorOperatorAlreadyHasAnActiveMission() {
+        rescueCenter.addOperator(operator);
+        rescueCenter.addDrone(drone); 
+        
+        Drone segundoDrone = new Drone("1031", "Mk-II", 40);
+        rescueCenter.addDrone(segundoDrone); 
+
+        rescueCenter.assignMission("2025", "1030", "popayan", 20);
+
+        assertThrows(IllegalStateException.class, () -> {
+            rescueCenter.assignMission("2025", "1031", "cali", 20);
+        });
+    }
+}

@@ -2,12 +2,17 @@ package edu.eci.dosw.tdd.skyrescue.center;
 
 import edu.eci.dosw.tdd.skyrescue.drone.Drone;
 import edu.eci.dosw.tdd.skyrescue.mission.Mission;
+import edu.eci.dosw.tdd.skyrescue.mission.MissionStatus;
 import edu.eci.dosw.tdd.skyrescue.operator.RescueOperator;
 
+import java.nio.channels.SelectableChannel;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.w3c.dom.ranges.DocumentRange;
 
 /**
  * Coordinates drones, operators and emergency missions.
@@ -70,8 +75,48 @@ public class RescueCenter {
             String droneId,
             String location,
             int distanceKm) {
-        // TODO Implement using TDD.
-        return null;
+        RescueOperator selectedOperator =null;
+        for (RescueOperator op : operators){
+            if(op.getId().equals(operatorId)){
+                selectedOperator = op;
+                break;
+            }
+        }
+        if(selectedOperator == null){
+            throw new IllegalArgumentException("El operador no exite.");
+        }
+        if (!drones.containsKey(droneId)){
+            throw new IllegalArgumentException("El dron no existe.");
+        }
+        Drone SelectedDrone =drones.get(droneId);
+        if (!SelectedDrone.isAvailable()){
+            throw new IllegalStateException("El dron no está disponible.");
+        }
+        if(distanceKm<=0|| distanceKm > SelectedDrone.getMaxRangeKm()){
+            throw new IllegalArgumentException("La distancia es inválida o excede la autonomía del dron.");
+        }
+        for (Mission m : missions) {
+            if (m.getOperator().getId().equals(operatorId) && m.getStatus() == MissionStatus.ACTIVE) {
+                throw new IllegalStateException("El operador ya tiene una misión activa.");
+            }
+        }
+
+        String generatedMissionId = "M-" + (missions.size() + 1);
+        
+        Mission newMission = new Mission(
+                generatedMissionId,
+                location,
+                distanceKm,
+                SelectedDrone,
+                selectedOperator,
+                LocalDateTime.now(), 
+                MissionStatus.ACTIVE
+        );
+        SelectedDrone.setAvailable(false);
+        missions.add(newMission);
+
+        return newMission;
+        
     }
 
     /**
