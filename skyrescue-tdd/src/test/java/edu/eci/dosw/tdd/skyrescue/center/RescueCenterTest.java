@@ -108,5 +108,13 @@ public class RescueCenterTest {
         assertFalse(rescueCenter.addDrone(null));
     }
 
+    //Registrar con id vacío
+    @Test 
+    public void shouldNotRegisterDroneWithBlankId(){
+        Drone droneFalse = new Drone("","Mk",30);
+        Drone droneFalse2 = new Drone(null,"Mk",30);
+        assertFalse(rescueCenter.addDrone(droneFalse));
+        assertFalse(rescueCenter.addDrone(droneFalse2));
+    }
 
 }
