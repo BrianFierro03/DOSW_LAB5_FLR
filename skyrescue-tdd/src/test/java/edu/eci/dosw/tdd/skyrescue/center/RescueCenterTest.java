@@ -117,4 +117,12 @@ public class RescueCenterTest {
         assertFalse(rescueCenter.addDrone(droneFalse2));
     }
 
+    //Registrar dos ids iguales
+    @Test 
+    public void shouldNotRegisterDronesWithSameNames(){
+        Drone second = new Drone("1030", "Mk", 30);
+        assertTrue(rescueCenter.addDrone(drone));
+        assertFalse(rescueCenter.addDrone(second));
+    }
+
 }
