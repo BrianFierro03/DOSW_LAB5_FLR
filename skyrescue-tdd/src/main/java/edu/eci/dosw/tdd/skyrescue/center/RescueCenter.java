@@ -45,6 +45,9 @@ public class RescueCenter {
         if (drone == null){
             return false;
         }
+        if (drone.getId() == null || drone.getId().trim().equals("")){
+            return false;
+        }
         
         this.drones.put(drone.getId(),drone);
 
