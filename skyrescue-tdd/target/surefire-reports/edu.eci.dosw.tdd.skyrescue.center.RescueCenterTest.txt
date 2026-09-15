@@ -1,0 +1,103 @@
+-------------------------------------------------------------------------------
+Test set: edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 7, Errors: 3, Skipped: 0, Time elapsed: 0.029 s <<< FAILURE! -- in edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorMissionDontExist -- Time elapsed: 0.009 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Debe lanzar IllegalArgumentException al intentar cerrar una misión que  no existe ==> Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:39)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3153)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorMissionDontExist(RescueCenterTest.java:116)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldThrowAnErrorDistanceExceedsMaxRange -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldThrowAnErrorDistanceExceedsMaxRange(RescueCenterTest.java:72)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorOperatorDontExist -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorOperatorDontExist(RescueCenterTest.java:82)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorCloseTwoTimesMission -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.eci.dosw.tdd.skyrescue.mission.Mission.getId()" because "activeMission" is null
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorCloseTwoTimesMission(RescueCenterTest.java:126)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.CloseAnActiveMission -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.eci.dosw.tdd.skyrescue.mission.Mission.getId()" because "activeMission" is null
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.CloseAnActiveMission(RescueCenterTest.java:109)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldThrowAnErrorOperatorAlreadyHasAnActiveMission -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalStateException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldThrowAnErrorOperatorAlreadyHasAnActiveMission(RescueCenterTest.java:98)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateMissionCorrectInput -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: La misión debería ser creada ==> expected: not <null>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertNotNull.failNull(AssertNotNull.java:49)
+	at org.junit.jupiter.api.AssertNotNull.assertNotNull(AssertNotNull.java:35)
+	at org.junit.jupiter.api.Assertions.assertNotNull(Assertions.java:312)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateMissionCorrectInput(RescueCenterTest.java:40)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldUseADroneItHaveBusiness -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalStateException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldUseADroneItHaveBusiness(RescueCenterTest.java:61)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnotherMission -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "edu.eci.dosw.tdd.skyrescue.mission.Mission.getId()" because "mission1" is null
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnotherMission(RescueCenterTest.java:141)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
+edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorDroneDontExist -- Time elapsed: 0.001 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:152)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:73)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at edu.eci.dosw.tdd.skyrescue.center.RescueCenterTest.ShouldCreateAnErrorDroneDontExist(RescueCenterTest.java:49)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+
