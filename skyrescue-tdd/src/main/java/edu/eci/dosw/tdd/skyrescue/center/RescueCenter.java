@@ -42,7 +42,11 @@ public class RescueCenter {
      * @return true if it was registered; false otherwise.
      */
     public boolean addDrone(Drone drone) {
-                this.drones.put(drone.getId(),drone);
+        if (drone == null || drone.getId() == null || drone.getId().trim().equals("") || this.drones.get(drone.getId()) != null){
+            return false;
+        }
+
+        this.drones.put(drone.getId(),drone);
 
         if (drones.get(drone.getId()) != null){
             return true;
@@ -81,10 +85,13 @@ public class RescueCenter {
             String droneId,
             String location,
             int distanceKm) {
-        RescueOperator selectedOperator = operators.stream()
-                .filter(op -> op.getId().equals(operatorId))
-                .findFirst()
-                .orElse(null);
+        RescueOperator selectedOperator =null;
+        for (RescueOperator op : operators){
+            if(op.getId().equals(operatorId)){
+                selectedOperator = op;
+                break;
+            }
+        }
         if(selectedOperator == null){
             throw new IllegalArgumentException("El operador no exite.");
         }
@@ -141,29 +148,8 @@ public class RescueCenter {
      * @return completed mission.
      */
     public Mission completeMission(String missionId) {
-        if (missionId == null || missionId.trim().isEmpty()) {
-            throw new IllegalArgumentException("El ID de la misión no puede ser nulo o vacío.");
-        }
-
-        Mission foundMission = null;
-        for (Mission m : missions) {
-            if (m.getId().equals(missionId)) {
-                foundMission = m;
-                break;
-            }
-        }
-
-        if (foundMission == null) {
-            throw new IllegalArgumentException("La misión no existe.");
-        }
-        if (foundMission.getStatus() == MissionStatus.COMPLETED) {
-            throw new IllegalStateException("La misión ya fue completada.");
-        }
-        foundMission.setStatus(MissionStatus.COMPLETED);
-        foundMission.setEndDate(LocalDateTime.now());
-        foundMission.getDrone().setAvailable(true);
-
-        return foundMission;
+        // TODO Implement using TDD.
+        return null;
     }
 
     public boolean addOperator(RescueOperator operator) {

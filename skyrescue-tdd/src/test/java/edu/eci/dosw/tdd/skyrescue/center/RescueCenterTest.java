@@ -111,6 +111,7 @@ public class RescueCenterTest {
         assertNotNull(completedMission.getEndDate(), "La fecha de cierre no debe ser nula");
         assertTrue(drone.isAvailable(), "El dron asociado debe volver a estar disponible");
     }
+    //Mision no existe
     @Test 
     public void ShouldCreateAnErrorMissionDontExist(){
         assertThrows(IllegalArgumentException.class, () -> {
@@ -118,6 +119,7 @@ public class RescueCenterTest {
         }, "Debe lanzar IllegalArgumentException al intentar cerrar una misión que  no existe");
 
     }
+    //Mision 2 a la vez 
     @Test
      public void ShouldCreateAnErrorCloseTwoTimesMission(){
         rescueCenter.addDrone(drone);
@@ -128,6 +130,7 @@ public class RescueCenterTest {
             rescueCenter.completeMission(activeMission.getId());
         }, "Debe lanzar IllegalStateException al intentar cerrar una misión ya completada");
      }
+     // debe crear otra mision
      @Test 
      public void ShouldCreateAnotherMission(){
         rescueCenter.addDrone(drone);
