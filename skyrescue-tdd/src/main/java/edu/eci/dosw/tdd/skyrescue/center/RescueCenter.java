@@ -81,13 +81,10 @@ public class RescueCenter {
             String droneId,
             String location,
             int distanceKm) {
-        RescueOperator selectedOperator =null;
-        for (RescueOperator op : operators){
-            if(op.getId().equals(operatorId)){
-                selectedOperator = op;
-                break;
-            }
-        }
+        RescueOperator selectedOperator = operators.stream()
+                .filter(op -> op.getId().equals(operatorId))
+                .findFirst()
+                .orElse(null);
         if(selectedOperator == null){
             throw new IllegalArgumentException("El operador no exite.");
         }
