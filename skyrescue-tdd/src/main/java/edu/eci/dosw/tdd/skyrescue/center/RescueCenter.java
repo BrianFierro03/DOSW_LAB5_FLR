@@ -2,12 +2,17 @@ package edu.eci.dosw.tdd.skyrescue.center;
 
 import edu.eci.dosw.tdd.skyrescue.drone.Drone;
 import edu.eci.dosw.tdd.skyrescue.mission.Mission;
+import edu.eci.dosw.tdd.skyrescue.mission.MissionStatus;
 import edu.eci.dosw.tdd.skyrescue.operator.RescueOperator;
 
+import java.nio.channels.SelectableChannel;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.w3c.dom.ranges.DocumentRange;
 
 /**
  * Coordinates drones, operators and emergency missions.
@@ -37,8 +42,14 @@ public class RescueCenter {
      * @return true if it was registered; false otherwise.
      */
     public boolean addDrone(Drone drone) {
-        // TODO Implement using TDD.
-        return false;
+                this.drones.put(drone.getId(),drone);
+
+        if (drones.get(drone.getId()) != null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -70,8 +81,48 @@ public class RescueCenter {
             String droneId,
             String location,
             int distanceKm) {
-        // TODO Implement using TDD.
-        return null;
+        RescueOperator selectedOperator =null;
+        for (RescueOperator op : operators){
+            if(op.getId().equals(operatorId)){
+                selectedOperator = op;
+                break;
+            }
+        }
+        if(selectedOperator == null){
+            throw new IllegalArgumentException("El operador no exite.");
+        }
+        if (!drones.containsKey(droneId)){
+            throw new IllegalArgumentException("El dron no existe.");
+        }
+        Drone SelectedDrone =drones.get(droneId);
+        if (!SelectedDrone.isAvailable()){
+            throw new IllegalStateException("El dron no está disponible.");
+        }
+        if(distanceKm<=0|| distanceKm > SelectedDrone.getMaxRangeKm()){
+            throw new IllegalArgumentException("La distancia es inválida o excede la autonomía del dron.");
+        }
+        for (Mission m : missions) {
+            if (m.getOperator().getId().equals(operatorId) && m.getStatus() == MissionStatus.ACTIVE) {
+                throw new IllegalStateException("El operador ya tiene una misión activa.");
+            }
+        }
+
+        String generatedMissionId = "M-" + (missions.size() + 1);
+        
+        Mission newMission = new Mission(
+                generatedMissionId,
+                location,
+                distanceKm,
+                SelectedDrone,
+                selectedOperator,
+                LocalDateTime.now(), 
+                MissionStatus.ACTIVE
+        );
+        SelectedDrone.setAvailable(false);
+        missions.add(newMission);
+
+        return newMission;
+        
     }
 
     /**
@@ -93,8 +144,29 @@ public class RescueCenter {
      * @return completed mission.
      */
     public Mission completeMission(String missionId) {
-        // TODO Implement using TDD.
-        return null;
+        if (missionId == null || missionId.trim().isEmpty()) {
+            throw new IllegalArgumentException("El ID de la misión no puede ser nulo o vacío.");
+        }
+
+        Mission foundMission = null;
+        for (Mission m : missions) {
+            if (m.getId().equals(missionId)) {
+                foundMission = m;
+                break;
+            }
+        }
+
+        if (foundMission == null) {
+            throw new IllegalArgumentException("La misión no existe.");
+        }
+        if (foundMission.getStatus() == MissionStatus.COMPLETED) {
+            throw new IllegalStateException("La misión ya fue completada.");
+        }
+        foundMission.setStatus(MissionStatus.COMPLETED);
+        foundMission.setEndDate(LocalDateTime.now());
+        foundMission.getDrone().setAvailable(true);
+
+        return foundMission;
     }
 
     public boolean addOperator(RescueOperator operator) {
