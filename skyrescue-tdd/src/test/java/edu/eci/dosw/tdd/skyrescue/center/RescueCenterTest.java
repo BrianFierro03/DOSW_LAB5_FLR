@@ -95,6 +95,55 @@ public class RescueCenterTest {
             rescueCenter.assignMission("2025", "1031", "cali", 20);
         });
     }
+    
+    //Cerrar una misión activa
+    @Test
+    public void CloseAnActiveMission(){
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+        Mission activeMission = rescueCenter.assignMission("2025", "1030", "popayan", 20);
+        Mission completedMission = rescueCenter.completeMission(activeMission.getId());
+        assertEquals(MissionStatus.COMPLETED, completedMission.getStatus(), "El estado debe ser COMPLETED");
+        assertNotNull(completedMission.getEndDate(), "La fecha de cierre no debe ser nula");
+        assertTrue(drone.isAvailable(), "El dron asociado debe volver a estar disponible");
+    }
+    //Mision no existe
+    @Test 
+    public void ShouldCreateAnErrorMissionDontExist(){
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.completeMission("ID_INVENTADO_999");
+        }, "Debe lanzar IllegalArgumentException al intentar cerrar una misión que  no existe");
+
+    }
+    //Mision 2 a la vez 
+    @Test
+     public void ShouldCreateAnErrorCloseTwoTimesMission(){
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+        Mission activeMission = rescueCenter.assignMission("2025", "1030", "popayan", 20);
+        rescueCenter.completeMission(activeMission.getId());
+        assertThrows(IllegalStateException.class, () -> {
+            rescueCenter.completeMission(activeMission.getId());
+        }, "Debe lanzar IllegalStateException al intentar cerrar una misión ya completada");
+     }
+     // debe crear otra mision
+     @Test 
+     public void ShouldCreateAnotherMission(){
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+        Mission mission1 = rescueCenter.assignMission("2025", "1030", "popayan", 20);
+        Drone drone2 = new Drone("1031", "Mk-II", 40);
+        RescueOperator operator2 = new RescueOperator("2026", "Jacinta");
+        rescueCenter.addDrone(drone2);
+        rescueCenter.addOperator(operator2);
+        Mission mission2 = rescueCenter.assignMission("2026", "1031", "cali", 25);
+        rescueCenter.completeMission(mission1.getId());
+        assertEquals(MissionStatus.ACTIVE, mission2.getStatus(), "La otra misión debe conservar su estado ACTIVE");
+        assertFalse(drone2.isAvailable(), "El dron de la otra misión debe seguir ocupado");
+    }
+     
+
+
 
     //Registrar un Dron valido
     @Test 
