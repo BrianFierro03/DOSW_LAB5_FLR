@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+skyrescue-tdd,edu.eci.dosw.tdd.skyrescue.mission,MissionStatus,0,15,0,0,0,3,0,1,0,1
+skyrescue-tdd,edu.eci.dosw.tdd.skyrescue.mission,Mission,6,50,0,0,2,19,2,9,2,9
+skyrescue-tdd,edu.eci.dosw,App,7,0,0,0,3,0,2,0,2,0
+skyrescue-tdd,edu.eci.dosw.tdd.skyrescue.drone,Drone,26,33,3,1,6,13,4,6,2,6
+skyrescue-tdd,edu.eci.dosw.tdd.skyrescue.center,RescueCenter,3,236,3,39,2,51,3,23,0,5
+skyrescue-tdd,edu.eci.dosw.tdd.skyrescue.operator,RescueOperator,3,12,0,0,1,5,1,2,1,2
