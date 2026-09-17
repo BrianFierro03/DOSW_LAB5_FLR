@@ -42,8 +42,18 @@ public class RescueCenter {
      * @return true if it was registered; false otherwise.
      */
     public boolean addDrone(Drone drone) {
-        // TODO Implement using TDD.
-        return false;
+        if (drone == null || drone.getId() == null || drone.getId().trim().equals("") || this.drones.get(drone.getId()) != null){
+            return false;
+        }
+
+        this.drones.put(drone.getId(),drone);
+
+        if (drones.get(drone.getId()) != null){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     /**
@@ -138,8 +148,29 @@ public class RescueCenter {
      * @return completed mission.
      */
     public Mission completeMission(String missionId) {
-        // TODO Implement using TDD.
-        return null;
+        if (missionId == null || missionId.trim().isEmpty()) {
+            throw new IllegalArgumentException("El ID de la misión no puede ser nulo o vacío.");
+        }
+
+        Mission foundMission = null;
+        for (Mission m : missions) {
+            if (m.getId().equals(missionId)) {
+                foundMission = m;
+                break;
+            }
+        }
+
+        if (foundMission == null) {
+            throw new IllegalArgumentException("La misión no existe.");
+        }
+        if (foundMission.getStatus() == MissionStatus.COMPLETED) {
+            throw new IllegalStateException("La misión ya fue completada.");
+        }
+        foundMission.setStatus(MissionStatus.COMPLETED);
+        foundMission.setEndDate(LocalDateTime.now());
+        foundMission.getDrone().setAvailable(true);
+
+        return foundMission;
     }
 
     public boolean addOperator(RescueOperator operator) {
