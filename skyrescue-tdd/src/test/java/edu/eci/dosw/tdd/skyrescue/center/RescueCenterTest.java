@@ -2,6 +2,7 @@ package edu.eci.dosw.tdd.skyrescue.center;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -29,6 +30,8 @@ public class RescueCenterTest {
         operator = new RescueOperator("2025", "Rudencio");
     }
 
+
+    
     // Operador y dron válidos, distancia permitida
     @Test 
     void ShouldCreateMissionCorrectInput(){
@@ -50,6 +53,32 @@ public class RescueCenterTest {
             rescueCenter.assignMission("2025", "DONT_EXIST", "popayan", 20);
         });
     }
+    // Distancia menor o igual a cero
+    @Test
+    public void ShouldThrowAnErrorDistanceLessThanOrEqualZero() {
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("2025", "1030", "popayan", 0);
+        });
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("2025", "1030", "popayan", -5);
+        });
+    }
+    
+    // Completar misión con ID nulo o vacío
+    @Test
+    public void ShouldThrowAnErrorCompleteMissionWithInvalidId() {
+            assertThrows(IllegalArgumentException.class, () -> {
+                rescueCenter.completeMission(null);
+            });
+
+            assertThrows(IllegalArgumentException.class, () -> {
+                rescueCenter.completeMission("   ");
+            });
+        }
     
     // Dron ya ocupado
     @Test 
@@ -144,8 +173,6 @@ public class RescueCenterTest {
     }
      
 
-
-
     //Registrar un Dron valido
     @Test 
     public void shouldRegisterValidDrone(){
@@ -157,7 +184,6 @@ public class RescueCenterTest {
     public void shouldNotRegisterANullDrone(){
         assertFalse(rescueCenter.addDrone(null));
     }
-
     //Registrar con id vacío
     @Test 
     public void shouldNotRegisterDroneWithBlankId(){
@@ -166,7 +192,6 @@ public class RescueCenterTest {
         assertFalse(rescueCenter.addDrone(droneFalse));
         assertFalse(rescueCenter.addDrone(droneFalse2));
     }
-
     //Registrar dos ids iguales
     @Test 
     public void shouldNotRegisterDronesWithSameNames(){
@@ -174,4 +199,56 @@ public class RescueCenterTest {
         assertTrue(rescueCenter.addDrone(drone));
         assertFalse(rescueCenter.addDrone(second));
     }
+    /*
+     * Pruebas sugeridas por la IA
+     * Prompt utilizado: "Ayúdame a pensar más pruebas que no hubiera
+     * tenido en cuenta" (se le pasaron previamente las pruebas ya
+     * existentes de RescueCenterTest).
+     */
+
+    // Distancia igual a cero
+    @Test
+    public void ShouldThrowAnErrorDistanceIsZero() {
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("2025", "1030", "popayan", 0);
+        });
+    }
+    // Distancia negativa
+    @Test
+    public void ShouldThrowAnErrorDistanceIsNegative() {
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            rescueCenter.assignMission("2025", "1030", "popayan", -5);
+        });
+    }
+    // Distancia exactamente igual a la autonomía 
+    @Test
+    public void ShouldCreateMissionWhenDistanceEqualsMaxRange() {
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        mission = rescueCenter.assignMission("2025", "1030", "popayan", 30);
+
+        assertNotNull(mission, "La misión debería ser creada en el límite de autonomía");
+        assertEquals(MissionStatus.ACTIVE, mission.getStatus(), "La misión debe estar activa");
+    }
+    // Datos de la misión creada
+    @Test
+    public void ShouldStoreMissionDataCorrectly() {
+        rescueCenter.addDrone(drone);
+        rescueCenter.addOperator(operator);
+
+        mission = rescueCenter.assignMission("2025", "1030", "popayan", 20);
+
+        assertEquals(drone, mission.getDrone(), "El dron asignado debe coincidir");
+        assertEquals(operator, mission.getOperator(), "El operador asignado debe coincidir");
+        assertNotNull(mission.getStartDate(), "La fecha de inicio no debe ser nula");
+    }
+    
+    
 }
