@@ -144,4 +144,34 @@ public class RescueCenterTest {
     }
      
 
+
+
+    //Registrar un Dron valido
+    @Test 
+    public void shouldRegisterValidDrone(){
+        assertTrue(rescueCenter.addDrone(drone));
+    }
+
+    //Registrar null
+    @Test 
+    public void shouldNotRegisterANullDrone(){
+        assertFalse(rescueCenter.addDrone(null));
+    }
+
+    //Registrar con id vacío
+    @Test 
+    public void shouldNotRegisterDroneWithBlankId(){
+        Drone droneFalse = new Drone("","Mk",30);
+        Drone droneFalse2 = new Drone(null,"Mk",30);
+        assertFalse(rescueCenter.addDrone(droneFalse));
+        assertFalse(rescueCenter.addDrone(droneFalse2));
+    }
+
+    //Registrar dos ids iguales
+    @Test 
+    public void shouldNotRegisterDronesWithSameNames(){
+        Drone second = new Drone("1030", "Mk", 30);
+        assertTrue(rescueCenter.addDrone(drone));
+        assertFalse(rescueCenter.addDrone(second));
+    }
 }
