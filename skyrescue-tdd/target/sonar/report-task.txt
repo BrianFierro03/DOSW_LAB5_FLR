@@ -1,0 +1,6 @@
+projectKey=skyrescue-tdd
+serverUrl=http://localhost:9000
+serverVersion=26.9.0.129388
+dashboardUrl=http://localhost:9000/dashboard?id=skyrescue-tdd
+ceTaskId=8192d2a1-7f41-48fe-9d1c-35b942457cfc
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8192d2a1-7f41-48fe-9d1c-35b942457cfc
