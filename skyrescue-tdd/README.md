@@ -21,10 +21,10 @@ Las operaciones que desarrollamos con TDD fueron: Agregar drones al centro de re
 
 ## Cobertura con Jacoco
 Cobertura incial:
-![Inicial](/skyrescue-tdd/docs/evidence/coverage-first.png.jpeg.png)
+![Inicial](/skyrescue-tdd/docs/evidence/coverage-first.png.jpeg)
 
 CObertura final:
-![Final](/skyrescue-tdd/docs/evidence/coverage-final.png.png.png)
+![Final](/skyrescue-tdd/docs/evidence/coverage-final.png.png)
 
 ## Dashboard de SonarQube
 Dashboard:
